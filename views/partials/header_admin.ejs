@@ -2,30 +2,51 @@
 
     <nav class="navbar navbar-expand-lg bg-$white py-3">
         <div class="container">
-            <a href="/" class="navbar-brand">admin</a>
+            
+            <% if (user) { %>
+                <a href="/dashboard" class="navbar-brand">Admin</a>
+            <% } else { %>
+                <a href="/" class="navbar-brand">Home</a>
+            <% } %>
 
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                <span class="bi bi-list"></span>
-            </button>
+
+            <!-- Navbar toggler button and logout button for small screens -->
+            <div class="d-flex d-lg-none ms-auto">
+                <% if (user) { %>
+                    <a href="/logout" class="btn btn-primary me-2">Log Out</a>
+                <% } %>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="bi bi-list"></span>
+                </button>
+            </div>
+
 
     
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">About</a>
+                        <a href="/about" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contact</a>
                     </li>
                 </ul>
             </div>
+
+
+            <!-- Logout for large screens -->
+            <% if (user) { %>
+                <div class="d-none d-lg-flex ps-2">
+                    <a href="/logout" class="btn btn-primary me-2">
+                        Logout
+                    </a>
+                </div>
+            <% } %>
+
         </div>
-        
+
     </nav>
 
-    <div class="header__button">
-        <a href="/logout">
-            Logout
-        </a>
-    </div>
 
 </header>
-

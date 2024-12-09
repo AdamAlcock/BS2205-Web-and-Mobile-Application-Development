@@ -44,10 +44,6 @@ router.get('/post/:id', async (req, res) => {
 
 
 
-
-
-
-
 router.get('/about', (req, res) => {
     res.render('about', {
         currentRoute: '/about'

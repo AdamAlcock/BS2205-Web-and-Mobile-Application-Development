@@ -4,8 +4,8 @@
         <div class="d-sm-flex align-items-center justify-content-between">
             <div>   
                 <h1>Sample welcoming text</h1>
-                <p class="lead my-4">Welcome to this blog website</p>
-                <button class="btn btn-dark btn-lg">Check out some blogs</button>
+                <p class="lead my-4">Review your favourite shows and games</p>
+                <button class="btn btn-dark btn-lg" id="scroll-button">Check out some reviews</button>
             </div>
             <img class="img-fluid w-50 d-none d-sm-block" src="img/233-2332677_image-500580-placeholder-transparent.png" alt="">
         </div>
@@ -29,8 +29,9 @@
 
 
 <!--Latest blogs-->
-<section class="p-5">
+<section id="latest-blogs" class="p-5">
     <div class="container">
+        <h2 class="text-center mb-4">Latest blogs</h2>
         <div class="row text-center g-4">
             <% data.forEach(post => { %>
             <div class="col-md">
@@ -58,3 +59,10 @@
         </div>
     </div>
 </section>
+
+
+<script>
+    document.getElementById('scroll-button').addEventListener('click', function() {
+        document.getElementById('latest-blogs').scrollIntoView({ behavior: 'smooth' });
+    });
+</script>

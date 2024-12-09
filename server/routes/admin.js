@@ -10,21 +10,26 @@ const jwtSecret = process.env.JWT_SECRET;
 
 
 // Check login middleware
-const authMiddleware = (req, res, next ) => {
-    const token = req.cookies.token;
-
-    if(!token) {
-        return res.status(401).json( { message: 'Unauthorized' } );
-    }
-
+const authMiddleware = async (req, res, next) => {
     try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
         const decoded = jwt.verify(token, jwtSecret);
-        req.userId = decoded.userId;
+        const user = await User.findById(decoded.userId);
+        if (!user) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        req.user = user; // Attach user to req object
         next();
-    } catch(error) {
-        res.status(401).json( { message: 'Unauthorized' } );
+    } catch (error) {
+        console.log(error);
+        res.status(401).json({ message: 'Unauthorized' });
     }
-}
+};
 
 
 
@@ -84,7 +89,8 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
     try {
         const locals = {
             title: "Dashboard",
-            description: "Admin interface"
+            description: "Admin interface",
+            user: req.user
         }
 
         const data = await Post.find();

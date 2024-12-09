@@ -4,19 +4,33 @@
         <div class="container">
             <a href="/" class="navbar-brand">Sample name</a>
 
+            <!-- Navbar toggler button and login button for small screens -->
+            <div class="d-flex d-lg-none ms-auto">
+                <a href="/admin" class="btn btn-primary me-2">Log in</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="bi bi-list"></span>
+                </button>
+            </div>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                <span class="bi bi-list"></span>
-            </button>
 
-    
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="#" class="nav-link <%= isActiveRoute('/about', currentRoute) %>">About</a>
+                        <a href="/about" class="nav-link <%= isActiveRoute('/about', currentRoute) %>">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contact</a>
                     </li>
                 </ul>
             </div>
+
+            <!-- Account related login, shown on large screens -->
+            <div class="d-none d-lg-flex ps-2">
+                <a href="/admin" class="btn btn-primary">Log in</a>
+            </div>
+
+
+
         </div>
         
     </nav>

@@ -1,23 +1,31 @@
 <div class="admin-title">
-    <h2>Posts</h2>
+
+    <!-- Greetings to the user with their username -->
+
+    <h2>Hello, <%= locals.user.username %>!</h2>
+
+    <!-- Button to add a new post -->
     <a href="/add-post" class="btn">add new</a>
 </div>
 
-<ul class="admin-posts">
-    <% data.forEach(post => { %>
-     
-        <li>
-            <a href="/post/<%= post._id %>">
-                <%= post.title %> &nearr;
-            </a>
-            <div class="admin-post-controls">
-                <a href="/edit-post/<%= post._id %>" class="btn">Edit</a>
 
-                <form action="/delete-post/<%= post._id %>?_method=DELETE" method="POST">
-                    <input type="submit" value="Delete" class="btn">
-                </form>
-            </div>
-        </li>
+<!-- List of posts with edit and delete buttons -->
 
-    <% }) %>
-</ul>
+<section class="container-fluid mt-4">
+    <ul class="list-group">
+        <% data.forEach(post => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="/post/<%= post._id %>" class="text-decoration-none">
+                    <%= post.title %> &nearr;
+                </a>
+                <div class="admin-post-controls">
+                    <a href="/edit-post/<%= post._id %>" class="btn btn-primary btn-sm me-2">Edit</a>
+                    <form action="/delete-post/<%= post._id %>?_method=DELETE" method="POST" class="d-inline">
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                    </form>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+</section>
+
