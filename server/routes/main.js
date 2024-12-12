@@ -9,7 +9,7 @@ router.get('', async (req, res) => {
     }
 
     try {
-        const data = await Post.find();
+        const data = await Post.find().populate('user');
         res.render('index', { locals, data, currentRoute: '/' });
     } catch (error) {
         console.log(error);
@@ -25,7 +25,7 @@ router.get('/post/:id', async (req, res) => {
 
         let slug = req.params.id;
 
-        const data = await Post.findById({ _id: slug });
+        const data = await Post.findById({ _id: slug }).populate('user');
 
         const locals = {
             title: data.title,

@@ -31,7 +31,7 @@
 <!--Latest blogs-->
 <section id="latest-blogs" class="p-5">
     <div class="container">
-        <h2 class="text-center mb-4">Latest blogs</h2>
+        <h2 class="text-center mb-4">Latest Reviews</h2>
         <div class="row text-center g-4">
             <% data.forEach(post => { %>
             <div class="col-md">
@@ -51,6 +51,9 @@
                         </span>
                         <div class="mt-2">
                             <a href="/post/<%= post._id %>" class="btn btn-warning">Open blog</a>
+                        </div>
+                        <div class="mt-2">
+                            <small>Posted by <%= post.user.username %></small>
                         </div>
                     </div>
                 </div>
