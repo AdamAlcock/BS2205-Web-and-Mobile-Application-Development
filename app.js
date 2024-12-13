@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'WEBSITE_SECRET',
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
@@ -38,6 +38,7 @@ app.locals.isActiveRoute = isActiveRoute;
 
 app.use('/', require('./server/routes/main'));
 app.use('/', require('./server/routes/admin'));
+app.use('/', require('./server/routes/content'));
 
 app.listen(PORT, ()=> {
     console.log(`App listening on port ${PORT}`);

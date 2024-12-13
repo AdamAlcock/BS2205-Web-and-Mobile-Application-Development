@@ -1,5 +1,13 @@
-<h1><%= data.title %></h1>
-<article class="article">
-    <%= data.body %>
-    <p>Posted by <%= data.user.username %> on <%= data.createdAt.toDateString() %></p>
-</article>
+<div class="container mt-5">
+    <h1 class="display-4 text-center"><%= data.title %></h1>
+    <article class="article mt-4">
+        <!-- Image -->
+        <img src="<%= data.image %>" alt="<%= data.title %>" class="img-fluid rounded mx-auto d-block article-image" />
+
+        <!-- Body -->
+        <div class="mt-3">
+            <p class="lead"><%= data.body %></p>
+            <p class="text-muted">Posted by <strong><%= data.user.username %></strong> on <%= data.createdAt.toDateString() %></p>
+        </div>
+    </article>
+</div>

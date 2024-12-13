@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const checkAuth = require('../middleware/checkAuth');
 
-router.get('', async (req, res) => {
+router.get('', checkAuth, async (req, res) => {
+
+    if (req.user) {
+        return res.redirect('/dashboard');
+    }
+
     const locals = {
         title: "Blog",
         description: "Sample blog"
@@ -43,6 +49,7 @@ router.get('/post/:id', async (req, res) => {
 
 
 
+// About page
 
 router.get('/about', (req, res) => {
     res.render('about', {

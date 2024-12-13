@@ -4,6 +4,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middleware/authMiddleware');
 
 const adminLayout = '../views/layouts/admin';
 const jwtSecret = process.env.JWT_SECRET;
@@ -43,29 +44,6 @@ function checkFileType(file, cb) {
         cb('Error: Images Only!');
     }
 }
-
-
-// Check login middleware
-const authMiddleware = async (req, res, next) => {
-    try {
-        const token = req.cookies.token;
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        const decoded = jwt.verify(token, jwtSecret);
-        const user = await User.findById(decoded.userId);
-        if (!user) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        req.user = user; // Attach user to req object
-        next();
-    } catch (error) {
-        console.log(error);
-        res.status(401).json({ message: 'Unauthorized' });
-    }
-};
 
 
 
@@ -180,7 +158,8 @@ router.post('/add-post', authMiddleware, (req, res) => {
                         title: req.body.title,
                         body: req.body.body,
                         image: `/img/${req.file.filename}`,
-                        user: req.user._id
+                        user: req.user._id,
+                        status: req.body.status
                     });
 
                     await Post.create(newPost);
@@ -195,7 +174,7 @@ router.post('/add-post', authMiddleware, (req, res) => {
 
 
 
-// GET create new post
+// GET edit new post
 
 router.get('/edit-post/:id', authMiddleware, async (req, res) => {
 
@@ -232,13 +211,24 @@ router.put('/edit-post/:id', authMiddleware, (req, res) => {
             res.redirect(`/edit-post/${req.params.id}`);
         } else {
             try {
+                const post = await Post.findById(req.params.id);
                 const updateData = {
                     title: req.body.title,
                     body: req.body.body,
-                    updatedAt: Date.now()
+                    updatedAt: Date.now(),
+                    status: req.body.status
                 };
 
                 if (req.file) {
+                    // Delete the current image
+                    if (post.image) {
+                        const currentImagePath = path.join(__dirname, '..', '..', 'public', post.image);
+                        fs.unlink(currentImagePath, (err) => {
+                            if (err) {
+                                console.log('Failed to delete the current image:', err);
+                            }
+                        });
+                    }
                     updateData.image = `/img/${req.file.filename}`;
                 }
 

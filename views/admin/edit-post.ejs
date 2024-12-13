@@ -32,6 +32,19 @@
         </div>
     </div>
 
+    <!-- Add a dropdown menu for selecting the post status -->
+    <div class="mb-3">
+        <label for="status" class="form-label"><b>Status</b></label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="" selected disabled>Select a status</option>
+            <option value="published">Publish</option>
+            <option value="draft">Draft</option>
+        </select>
+        <div class="invalid-feedback">
+            Please select a status.
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-primary">Update</button>
 </form>
 
