@@ -48,7 +48,6 @@ function checkFileType(file, cb) {
 
 
 
-
 // Get the admin page
 router.get('/admin', async (req, res) => {
 
@@ -302,50 +301,39 @@ router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
 
 
 
+//  Comments react app
 
-router.get('/post/:postId/comments/:id', async (req, res) => {
+router.get('/getComments/:postId', async (req, res) => {
+    const { postId } = req.params;
     try {
-        const comment = await Comment.findById(req.params.id);
-        if (!comment) {
-            return res.status(404).json({ message: 'Comment not found' });
-        }
-        res.json(comment);
+      const comments = await Comment.find({ postId }).populate('user', 'username');
+      res.status(200).json(comments);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      console.error('Error fetching comments:', error);
+      res.status(500).json({ message: 'Internal server error' });
     }
-});
+  });
 
-
-// Fetch comments
-router.get('/post/:postId/comments', async (req, res) => {
+  
+  router.post('/addComment', async (req, res) => {
+    const { postId, message } = req.body;
+  
     try {
-        const comments = await Comment.find()
-        res.json(comments)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-});
-
-
-// Create a new comment
-router.post('/post/:postId/comments', async (req, res) => {
-    const { postId } = req.params
-    const { message, parentID } = req.body
-
-    const newComment = new Comment({
+      const newComment = new Comment({
         postId,
         message,
-        parentID,
-        user: req.user._id // Assuming you have user authentication
-    })
-
-    try {
-        const savedComment = await newComment.save()
-        res.status(201).json(savedComment)
+        user: req.user ? req.user._id : null // Optional: handle anonymous comments
+      });
+  
+      await newComment.save();
+  
+      res.status(201).json({ message: 'Comment added successfully', comment: newComment });
     } catch (error) {
-        res.status(400).json({ message: error.message })
+      console.error('Error adding comment:', error);
+      res.status(500).json({ message: 'Internal server error' });
     }
-});
+  });
+
 
 
 
