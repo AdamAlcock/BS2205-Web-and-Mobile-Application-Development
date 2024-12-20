@@ -3,3 +3,50 @@
         width: 50%;
     }
 }
+
+
+.home-banner {
+    background-color: #0d6efd;
+    color: #fff;
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.home-banner h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.home-banner p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.home-banner .btn {
+    font-size: 1.25rem;
+}
+
+.subscription-box {
+    background-color: #0d6efd;
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.subscription-box h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.subscription-box .input-group {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.subscription-box .form-control {
+    border-radius: 0;
+}
+
+.subscription-box .btn {
+    border-radius: 0;
+}
